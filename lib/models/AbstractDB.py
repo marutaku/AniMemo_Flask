@@ -1,26 +1,37 @@
+import requests
+import json
+from lib import config
+
 
 class AbstractDB(object):
-    def __init__(self, connection):
-        self.connection = connection
+    db_url = 'http://dbkiso.si.aoyama.ac.jp/jsonapi/'
 
-    def execute_sql(self, sql, context=None):
-        """
-        SQLの実行
-        :param sql text:
-        :param context  tuple:
-        :return:
-        """
+    def _custom_json(self, sql):
+        '''
+        POSTリクエストに用いるBODYをJSON文字列で生成
+        :return: str
+        '''
+        return {
+            'userid': config.userid,
+            'password': config.password,
+            'db': config.db,
+            'sql': sql
+        }
 
-        # Check context is tuple
-        if context and isinstance(context, tuple):
-            pass
-        elif context and isinstance(context, list):
-            context = tuple(context)
-        elif context:
-            return TypeError('Unexpected type object is passed')
+    def _request(self, sql):
+        post_body = self._custom_json(sql)
+        res = requests.post(self.db_url, data=post_body)
+        if res.status_code == 200:
+            return self._check_error(json.loads(res.text))
+        else:
+            raise requests.HTTPError('Unexpected status code: {}'.format(res.status_code))
 
-        with self.connection.cursor() as cursor:
-            cursor.execute(sql, context)
-            return cursor.fetchall()
-
-
+    def _check_error(self, res):
+        '''
+        {results: fail}でないかを確認
+        :param res: dict
+        :return: dict
+        '''
+        if res['result'] & res['result'] == 'fail':
+            raise Exception('SQLError')
+        return res
