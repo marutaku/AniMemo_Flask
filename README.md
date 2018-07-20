@@ -1,3 +1,4 @@
+`touch config.py`
 #Install 
 `docker-compose build`
 
