@@ -9,5 +9,3 @@ app.config.from_object('lib.config')
 app.register_blueprint(top)
 app.register_blueprint(user)
 app.register_blueprint(works)
-
-import lib.views
