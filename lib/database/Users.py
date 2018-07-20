@@ -16,6 +16,7 @@ class User(AbstractDB):
                                                                                                               image_path=image_path)
         return self._request(sql)
 
-    def get_user_status(self, user_id):
+    def get_user_by_id(self, user_id):
         sql = 'SELECT * FROM users WHERE id = {id}'.format(id=user_id)
         return self._request(sql)
+
