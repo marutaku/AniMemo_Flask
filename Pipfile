@@ -6,6 +6,8 @@ verify_ssl = true
 [packages]
 flask = "*"
 flask-sqlalchemy = "*"
+bcrypt = "*"
+requests = "*"
 
 [requires]
 python_version = "3.5"

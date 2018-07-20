@@ -3,12 +3,14 @@
 {% if error %}
 <div>{{error}}</div>
 {% endif %}
-<form action="/login" method="post">
+<form action="/register" method="post">
     <label for="name">user name</label>
     <input id="name" type="text" name="name"/>
+    <label for="email">email</label>
+    <input id="email" type="email" name="email" />
     <label for="password">password</label>
     <input id="password" type="password" name="password"/>
-    <input type="submit">
+    <input type="submit">submit</form>
 </form>
 {% endblock %}
 

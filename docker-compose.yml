@@ -7,4 +7,4 @@ services:
     - "5000:5000"
     volumes:
     - .:/code
-    command: python manage.py
+    command: bash -c "pipenv install && python manage.py"

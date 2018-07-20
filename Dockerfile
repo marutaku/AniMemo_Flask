@@ -5,7 +5,8 @@ RUN pip3 install pipenv
 RUN mkdir code
 WORKDIR ./code
 COPY . .
-RUN pipenv install --system
+
+RUN set -ex && pipenv install --system --deploy
 #RUN pipenv shell
 
 CMD ['python']
