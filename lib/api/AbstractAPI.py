@@ -7,11 +7,15 @@ class AbstractApi(object):
         self.base_path = base_path
 
     def _get(self, url):
-        response = requests.get(url)
+        full_url = urljoin(self.base_path, url)
+        print('base path:', self.base_path)
+        print(full_url)
+        response = requests.get(full_url)
         return self._error_handling(response)
 
     def _post(self, url, body):
-        response = requests.post(url, data=body)
+        full_url = urljoin(self.base_path, url)
+        response = requests.post(full_url, data=body)
         return self._error_handling(response)
 
     def _joint_path(self, path):
@@ -19,7 +23,7 @@ class AbstractApi(object):
 
     def _error_handling(self, response):
         if response.ok:
-            return resonse.json()
+            return response.json()
         else:
             error_text = 'Unexpected response status "{statuscode}"\n' \
                          'url: {url}\n' \
