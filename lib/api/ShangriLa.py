@@ -5,7 +5,7 @@ from lib.api.AbstractAPI import AbstractApi
 
 class ShangriLa(AbstractApi):
     def __init__(self):
-        super(ShangriLa, self).__init__('http://api.moemoe.tokyo/anime/v1/master')
+        super(ShangriLa, self).__init__('http://api.moemoe.tokyo/anime/v1/master/')
 
     def get_cours(self):
         path = 'course'
