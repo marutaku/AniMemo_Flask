@@ -1,32 +1,33 @@
-from flask import Blueprint, render_template, redirect, jsonify, request, g
+from flask import Blueprint, render_template, redirect, jsonify, request, g, session, url_for
 from lib.models.Work import WorkModel
 from lib import login_required
-work = Blueprint('work', __name__, url_prefix='/work')
+work = Blueprint('work', __name__, url_prefix='/works')
 
 @work.route('/', methods=['GET'])
 @login_required
 def render_works():
-    works_model = WorkModel()
-    if request.args.get('title') is not None and request.args.get('year') is not None and request.args.get('cours') is not None:
-        works = 1
-        return render_template('works.html', works=works)
-    if request.args.get('title') is not None and request.args.get('year') is not None:
-        works = 2
-        return render_template('works.html', works=works)
-    if request.args.get('title') is not None and request.args.get('cours') is not None:
-        works = 3
-        return render_template('works.html', works=works)
-    if request.args.get('year') is not None and request.args.get('cours') is not None:
-        works = 4
-        return render_template('works.html', works=works)
-    if request.args.get('title') is not None:
-        works = 5
-        return render_template('works.html', works=works)
-    if request.args.get('year') is not None:
-        works = 6
-        return render_template('works.html', works=works)
-    if request.args.get('cours') is not None:
-        works = 7
-        return render_template('works.html', works=works)
-    works = 9
-    return render_template('works.html', works=works)
+    work_model = WorkModel()
+    title_query = request.args.get('title')
+    year_query = request.args.get('year')
+    cours_query = request.args.get('cours')
+    works = work_model.get_works(title_query, year_query, cours_query)
+    return render_template('works.html', works=works, title_query=title_query, year_query=year_query, cours_query=cours_query)
+
+
+@login_required
+@work.route('/<int:id>', methods=['GET'])
+def show_work(id):
+    work_model = WorkModel()
+    work = work_model.show_work(id)
+
+    reviews = work_model.get_reviews_by_work(id)
+
+    return render_template('work.html', work=work, reviews=reviews)
+
+@login_required
+@work.route('/<int:id>', methods=['POST'])
+def post_review(id):
+    review_model = WorkModel()
+    review_model.post_review(session['user_id'], id, request.form['text'])
+    return redirect(url_for('work.show_work', id=id))
+

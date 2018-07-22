@@ -14,7 +14,7 @@ class Review(AbstractDB):
         return self._request(sql)
 
     def insert_review(self, user_id, work_id, text):
-        sql = 'INSERT INTO users(user_id, work_id, text) VALUES({user_id}, {work_id}, "{text}")'.format(user_id=user_id,
+        sql = 'INSERT INTO reviews(user_id, work_id, text) VALUES({user_id}, {work_id}, "{text}")'.format(user_id=user_id,
                                                                                                               work_id=work_id,
                                                                                                               text=text)
         return self._request(sql)

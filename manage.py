@@ -6,7 +6,7 @@ from lib import load_user
 
 
 
-app = Flask(__name__, template_folder='template')
+app = Flask(__name__, template_folder='template', static_folder='static')
 app.config.from_object('lib.config')
 app.before_request(load_user)
 app.register_blueprint(top)
