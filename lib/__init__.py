@@ -5,8 +5,11 @@ def login_required(f):
     @wraps(f)
     def decorated_view(*args, **kwargs):
         if g.user is None:
-            return redirect(url_for('index', next=request.path))
+            print('Not login')
+            return redirect(url_for('top.index'))
+        print('Login user: {}'.format(g.user))
         return f(*args, **kwargs)
+    return decorated_view
 
 def load_user():
     user_id = session.get('user_id')

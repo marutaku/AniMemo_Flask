@@ -5,12 +5,14 @@ from lib.views.works import works
 from lib import load_user
 
 
+
 app = Flask(__name__, template_folder='template')
 app.config.from_object('lib.config')
 app.before_request(load_user)
 app.register_blueprint(top)
 app.register_blueprint(user)
 app.register_blueprint(works)
+app.secret_key = 'hogehoge'
 
 
 if __name__ == '__main__':
