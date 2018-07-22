@@ -1,25 +1,20 @@
 {% extends "layout.html" %}
 {% block body %}
-
 <div class="container">
-    {% if error %}
-    <div>{{error}}</div>
-    {% endif %}
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Register</div>
+                <div class="panel-heading">Edit</div>
 
                 <div class="panel-body">
-                    <form id="register-user" class="form-horizontal" method="POST"
-                          action="/register">
+                    <form id="update-user" class="form-horizontal" method="POST" action="/user/edit/{{user_info['id']}}">
                         <input type="hidden" name="_token" value="1J6sr02mMRpheVizOfOyXGPF7pHHtMGRbPk15tq3">
 
                         <div class="form-group">
                             <label for="name" class="col-md-4 control-label">Name</label>
 
                             <div class="col-md-6">
-                                <input id="name" type="text" class="form-control" name="name" value="marutaku" required
+                                <input id="name" type="text" class="form-control" name="name" value="{{user_info['name']}}" required
                                        autofocus>
 
                             </div>
@@ -29,7 +24,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail Address</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{user_info['email']}}" required>
                             </div>
                         </div>
 
@@ -53,8 +48,8 @@
 
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                <button id="register_submit" type="submit" class="btn btn-primary" onsubmit="checkPassword()">
-                                    Register
+                                <button id="update-button" type="submit" class="btn btn-primary">
+                                    Update
                                 </button>
                             </div>
                         </div>
@@ -65,9 +60,9 @@
     </div>
 </div>
 <script>
-    $('#register_submit').on('click', (e) => {
+    $('#update-button').on('click', (e) => {
         e.preventDefault();
-        const form = $('#register-user');
+        const form = $('#update-user');
         const password = $('#password').val();
         const confirmPassword = $('#password-confirm').val();
         if (password === confirmPassword) {
@@ -78,4 +73,3 @@
     })
 </script>
 {% endblock %}
-

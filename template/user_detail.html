@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block body %}
+
+<div class="container">
+    <h1 class="inline">{{ user_info['name'] }}</h1>
+    {% if session.user_id == user_id %}
+    <a class="btn btn-success inline" href="/user/edit/{{user_id}}">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Setting
+    </a>
+    {% elif is_follow %}
+    <a id="unfollow" class="btn btn-success inline">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
+    </a>
+    <a id="follow" class="btn btn-success inline hidden">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
+    </a>
+    {% else %}
+    <a id="follow" class="btn btn-success inline">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
+    </a>
+    <a id="unfollow" class="btn btn-success inline hidden">
+        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
+    </a>
+    {% endif %}
+    <input id="followd_user_id" type="hidden" value="{{user_info['id']}}">
+    <input type="hidden" id="'user_id" value="{{session.user_id}}">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            きになる
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <ul>
+                    {% for item in user_data['watch_later'] %}
+                    <li>
+                        {{item['title']}}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            見たことある
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <ul>
+                    {% for item in user_data['watched'] %}
+                    <li>
+                        {{item['title']}}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            よかった
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <ul>
+                    {% for item in user_data['favorite'] %}
+                    <li>
+                        {{item['title']}}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            レビュー
+        </div>
+        <div class="panel-body">
+            <div class="list-group">
+                <ul>
+                    {% for item in user_data['review'] %}
+                    <li>
+                        {{item.title}}: {{item.text}}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .hidden {
+        display: none;
+    }
+</style>
+<script>
+    $('#follow').on('click', () => {
+        console.log('Click');
+        const followedUserId = $('#followd_user_id').val();
+        $.get(`/user/follow/${followedUserId}`, (data) => {
+            toggleHidden();
+            alert('フォロー成功')
+        })
+    });
+    $('#unfollow').on('click', () => {
+        console.log('Click');
+        const followedUserId = $('#followd_user_id').val();
+        $.get(`/user/unfollow/${followedUserId}`, (data) => {
+            toggleHidden();
+            alert('フォロー解除成功');
+        });
+    })
+    function toggleHidden(){
+        $('#follow').toggleClass('hidden');
+        $('#unfollow').toggleClass('hidden')
+    }
+</script>
+{% endblock %}

@@ -18,3 +18,9 @@ class Follows(AbstractDB):
         sql = 'DELETE FROM follows WHERE user_id = {user_id} AND followed_user_id = {followed_user_id}'.format(
             user_id=user_id, followed_user_id=followed_user_id)
         return self._request(sql)
+
+    def get_follow_by_id(self, from_id, to_id):
+        sql = 'SELECT * FROM follows WHERE user_id = {user_id} AND followed_user_id = {followed_user_id}'.format(
+            user_id=from_id, followed_user_id=to_id
+        )
+        return self._request(sql)
