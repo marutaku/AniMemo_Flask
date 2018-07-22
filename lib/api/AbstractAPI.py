@@ -19,7 +19,7 @@ class AbstractApi(object):
 
     def _error_handling(self, response):
         if response.ok:
-            return json.loads(response.text)
+            return resonse.json()
         else:
             error_text = 'Unexpected response status "{statuscode}"\n' \
                          'url: {url}\n' \

@@ -1,5 +1,6 @@
 from bs4 import BeautifulSoup 
 from lib.database.Works import Work
+from lib.api.ShangriLa import ShangriLa
 
 
 class WorkModel():
@@ -19,9 +20,7 @@ class WorkModel():
 
     def store_works(self, year):
         for cours in [1, 2, 3, 4]:
-            api_url = 'http://api.moemoe.tokyo/anime/v1/master/{year}/{cours}'.format(year=year, cours=cours);
-            headers = {"content-type": "application/json"}
-            works = requests.get(api_url, headers=headers).json()
+            works = get_by_year_and_cours(year, cours):
             for work in works:
                 # get image_path by public_url
                 soup = BeautifulSoup(requests.get(work['public_url']).content,'html.parser')
