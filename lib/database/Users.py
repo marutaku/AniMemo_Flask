@@ -5,7 +5,7 @@ class User(AbstractDB):
     def __init__(self):
         super(User, self).__init__()
 
-    def get_user(self, user_name):
+    def get_user_by_name(self, user_name):
         sql = 'SELECT * FROM users WHERE name="{name}"'.format(name=user_name)
         return self._request(sql)
 

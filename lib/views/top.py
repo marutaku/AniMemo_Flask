@@ -29,8 +29,12 @@ def register():
     password = request.form['password']
     image_path = None
     user_model = UserModel()
-    if user_model.register_user(user_name, email, password, image_path):
+    result = user_model.register_user(user_name, email, password, image_path)
+    if type(result) == bool:
         return render_template('index.html')
+    elif type(result) == str:
+        print(result)
+        return render_template('register.html', error=result)
     else:
         return render_template('register.html', error='Some Error was happen')
 
