@@ -1,8 +1,9 @@
 from flask import Blueprint, render_template, redirect, jsonify, request, g
+from lib.models.Work import WorkModel
 from lib import login_required
-works = Blueprint('works', __name__, url_prefix='/works')
+work = Blueprint('work', __name__, url_prefix='/work')
 
-@works.route('/')
+@work.route('/')
 @login_required
-def render_works():
+def render_work():
     return render_template('works.html')
