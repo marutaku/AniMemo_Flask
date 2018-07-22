@@ -14,8 +14,8 @@ def login():
     user_model = UserModel()
     user = user_model.login(user_name, password)
     if user:
-        session['id'] = user['id']
-        session['name'] = user['name']
+        session['user_id'] = user['id']
+
         return redirect('/works')
     else:
         return render_template('index.html', error='ユーザー名、またはパスワードが違います')
