@@ -4,6 +4,10 @@ class Works(AbstractDB):
     def __init__(self):
         super(Works, self).__init__()
 
+    def get_works(self):
+        sql = 'SELECT * FROM works'
+        return self._request(sql)
+
     def get_works_by_id(self, works_id):
         sql = 'SELECT * FROM works WHERE id = {id}'.format(id=works_id)
         return self._request(sql)
