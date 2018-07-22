@@ -4,9 +4,7 @@ create table `users` (
     `image_path` varchar(255) null,
     `email` varchar(255) not null,
     `password` varchar(255) not null,
-    `remember_token` varchar(100) null,
-    `created_at` timestamp null,
-    `updated_at` timestamp null
+    `created_at` timestamp DEFAULT CURRENT_TIMESTAMP,
 );
 
 alter table `users` add unique `users_email_unique`(`email`)
