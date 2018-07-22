@@ -1,28 +1,82 @@
 {% extends "layout.html" %}
 {% block body %}
-{% if error %}
-<div>{{error}}</div>
-{% endif %}
-<form action="/register" method="post">
-    <div class="form-group">
-        <label for="username">UserName</label>
-        <input type="text" class="form-control" id="username" placeholder="UserName" name="name">
+
+<div class="container">
+    {% if error %}
+    <div>{{error}}</div>
+    {% endif %}
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">Register</div>
+
+                <div class="panel-body">
+                    <form id="register-user" class="form-horizontal" method="POST"
+                          action="/register">
+                        <input type="hidden" name="_token" value="1J6sr02mMRpheVizOfOyXGPF7pHHtMGRbPk15tq3">
+
+                        <div class="form-group">
+                            <label for="name" class="col-md-4 control-label">Name</label>
+
+                            <div class="col-md-6">
+                                <input id="name" type="text" class="form-control" name="name" value="marutaku" required
+                                       autofocus>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email" class="col-md-4 control-label">E-Mail Address</label>
+
+                            <div class="col-md-6">
+                                <input id="email" type="email" class="form-control" name="email" value="" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="col-md-4 control-label">Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password" type="password" class="form-control" name="password" required>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password-confirm" class="col-md-4 control-label">Confirm Password</label>
+
+                            <div class="col-md-6">
+                                <input id="password-confirm" type="password" class="form-control"
+                                       name="password_confirmation" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-6 col-md-offset-4">
+                                <button id="register_submit" type="submit" class="btn btn-primary" onsubmit="checkPassword()">
+                                    Register
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
-    <div class="form-group">
-        <label for="exampleInputEmail1">Email address</label>
-        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-               placeholder="Enter email" name="email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="exampleInputPassword1">Password</label>
-        <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
-    </div>
-    <div class="form-group">
-    <label for="exampleFormControlFile1">Image path</label>
-    <input type="file" class="form-control-file" id="exampleFormControlFile1" name="image_path">
-  </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
+<script>
+    $('#register_submit').on('click', (e) => {
+        e.preventDefault();
+        const form = $('#register-user');
+        const password = $('#password').val();
+        const confirmPassword = $('#password-confirm').val();
+        debugger;
+        if (password === confirmPassword) {
+            form.submit()
+        } else {
+            alert('パスワードが一致しません')
+        }
+    })
+</script>
 {% endblock %}
 
