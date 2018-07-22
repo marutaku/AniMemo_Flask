@@ -7,6 +7,7 @@ def login_required(f):
         if g.user is None:
             return redirect(url_for('index', next=request.path))
         return f(*args, **kwargs)
+    return decorated_view
 
 def load_user():
     user_id = session.get('user_id')

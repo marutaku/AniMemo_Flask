@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import Blueprint, render_template, url_for, request, redirect, session
 from lib.models.User import UserModel
 
 top = Blueprint('top', __name__, url_prefix='/')
@@ -12,8 +12,10 @@ def login():
     user_name = request.form['name']
     password = request.form['password']
     user_model = UserModel()
-    if user_model.login(user_name, password):
-        #TODO Session
+    user = user_model.login(user_name, password)
+    if user:
+        session['id'] = user['id']
+        session['name'] = user['name']
         return redirect('/works')
     else:
         return render_template('index.html', error='ユーザー名、またはパスワードが違います')
