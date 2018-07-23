@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, jsonify, request, g, session, url_for
-from lib.models.Work import WorkModel
+from lib.models.work import WorkModel
 from lib import login_required
+import datetime
 work = Blueprint('work', __name__, url_prefix='/works')
 
 @work.route('/', methods=['GET'])
@@ -10,8 +11,11 @@ def render_works():
     title_query = request.args.get('title')
     year_query = request.args.get('year')
     cours_query = request.args.get('cours')
+    if year_query != "" and year_query is not None:
+        work_model.is_stored(year_query)
     works = work_model.get_works(title_query, year_query, cours_query)
-    return render_template('works.html', works=works, title_query=title_query, year_query=year_query, cours_query=cours_query)
+    today = datetime.date.today()
+    return render_template('works.html', works=works, title_query=title_query, year_query=year_query, cours_query=cours_query, current_year=today.year)
 
 
 @login_required

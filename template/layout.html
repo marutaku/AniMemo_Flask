@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='style.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.jpg') }}">
     
 </head>
 <body>
@@ -35,7 +36,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="http://localhost:8000">
+                <a class="navbar-brand" href="/">
                     AniMemo
                 </a>
             </div>
@@ -48,8 +49,13 @@
                 <!-- Right Side Of Navbar -->
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
+                    {% if session.user_id %}
+                    <li><a href="{{ url_for('user.detail', id=session.user_id) }}">MyPage</a></li>
+                    {% else %}
                     <li><a href="/">Login</a></li>
                     <li><a href="/register">Register</a></li>
+                    {% endif %}
+                    <li><a href="/works">Works</a></li>
                 </ul>
             </div>
         </div>

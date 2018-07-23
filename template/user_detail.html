@@ -3,40 +3,40 @@
 
 <div class="container">
     <h1 class="inline">{{ user_info['name'] }}</h1>
-    {% if session.user_id == user_id %}
-    <a class="btn btn-success inline" href="/user/edit/{{user_id}}">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Setting
-    </a>
-    {% elif is_follow %}
-    <a id="unfollow" class="btn btn-success inline">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
-    </a>
-    <a id="follow" class="btn btn-success inline hidden">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
-    </a>
-    {% else %}
-    <a id="follow" class="btn btn-success inline">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
-    </a>
-    <a id="unfollow" class="btn btn-success inline hidden">
-        <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
-    </a>
-    {% endif %}
-    <input id="followd_user_id" type="hidden" value="{{user_info['id']}}">
-    <input type="hidden" id="'user_id" value="{{session.user_id}}">
+    <div style="text-align: right;">
+      {% if session.user_id == user_id %}
+      <a class="btn btn-success " href="/user/edit/{{user_id}}">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Setting
+      </a>
+      {% elif is_follow %}
+      <a id="unfollow" class="btn btn-success ">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
+      </a>
+      <a id="follow" class="btn btn-success hidden">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
+      </a>
+      {% else %}
+      <a id="follow" class="btn btn-success ">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> follow
+      </a>
+      <a id="unfollow" class="btn btn-success hidden">
+          <span class="glyphicon glyphicon-cog" aria-hidden="true"></span> unfollow
+      </a>
+      {% endif %}
+      <input id="followd_user_id" type="hidden" value="{{user_info['id']}}">
+      <input type="hidden" id="'user_id" value="{{session.user_id}}">
+    </div>
+    <br>
+    
     <div class="panel panel-default">
         <div class="panel-heading">
             きになる
         </div>
         <div class="panel-body">
             <div class="list-group">
-                <ul>
                     {% for item in user_data['watch_later'] %}
-                    <li>
-                        {{item['title']}}
-                    </li>
+                      <a class="list-group-item" href="{{ url_for('work.show_work', id=item['work_id']) }}">{{item['title']}}</a>
                     {% endfor %}
-                </ul>
             </div>
         </div>
     </div>
@@ -47,13 +47,9 @@
         </div>
         <div class="panel-body">
             <div class="list-group">
-                <ul>
                     {% for item in user_data['watched'] %}
-                    <li>
-                        {{item['title']}}
-                    </li>
+                      <a class="list-group-item" href="{{ url_for('work.show_work', id=item['work_id']) }}">{{item['title']}}</a>
                     {% endfor %}
-                </ul>
             </div>
         </div>
     </div>
@@ -64,13 +60,9 @@
         </div>
         <div class="panel-body">
             <div class="list-group">
-                <ul>
                     {% for item in user_data['favorite'] %}
-                    <li>
-                        {{item['title']}}
-                    </li>
+                      <a class="list-group-item" href="{{ url_for('work.show_work', id=item['work_id']) }}">{{item['title']}}</a>
                     {% endfor %}
-                </ul>
             </div>
         </div>
     </div>
@@ -81,13 +73,9 @@
         </div>
         <div class="panel-body">
             <div class="list-group">
-                <ul>
                     {% for item in user_data['review'] %}
-                    <li>
-                        {{item.title}}: {{item.text}}
-                    </li>
+                      <a class="list-group-item" href="{{ url_for('work.show_work', id=item['work_id']) }}">{{item.title}} ： {{item.text}}</a>
                     {% endfor %}
-                </ul>
             </div>
         </div>
     </div>

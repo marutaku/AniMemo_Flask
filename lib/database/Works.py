@@ -5,6 +5,10 @@ class Works(AbstractDB):
     def __init__(self):
         super(Works, self).__init__()
 
+    def count_works_by_year(self, year):
+        sql = 'SELECT count(*) FROM works WHERE year = {year}'.format(year=year)
+        return self._request(sql)
+
     def get_work_by_id(self, id):
         sql = 'SELECT * FROM works WHERE id = {id}'.format(id=id)
         return self._request(sql)
