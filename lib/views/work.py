@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, redirect, jsonify, request, g, session, url_for
-from lib.models.Work import WorkModel
+from lib.models.work import WorkModel
 from lib import login_required
 work = Blueprint('work', __name__, url_prefix='/works')
 
@@ -7,9 +7,15 @@ work = Blueprint('work', __name__, url_prefix='/works')
 @login_required
 def render_works():
     work_model = WorkModel()
-    title_query = request.args.get('title')
-    year_query = request.args.get('year')
-    cours_query = request.args.get('cours')
+    title_query = ""
+    year_query = ""
+    cours_query = ""
+    if request.args.get('title'):
+        title_query = request.args.get('title')
+    if request.args.get('year'):
+        year_query = request.args.get('year')
+    if request.args.get('cours'):
+        cours_query = request.args.get('cours')
     works = work_model.get_works(title_query, year_query, cours_query)
     return render_template('works.html', works=works, title_query=title_query, year_query=year_query, cours_query=cours_query)
 
