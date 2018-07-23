@@ -1,4 +1,64 @@
 {% extends "layout.html" %}
 {% block body %}
-Works予定地
+<div class="container">
+  <div class="tac">
+    <div class="input-group my_box">
+      <form action="{{ url_for('work.render_works') }}">
+        <input type="number" name="year" min="2014" max="2018" value="{{ year_query }}">
+        <select name="cours">
+          <option value="" {% if cours_query == "" %} "selected" {% endif %}>-</option>
+          <option value="1" {% if cours_query == 1 %} "selected" {% endif %}>冬</option>
+          <option value="2" {% if cours_query == 2 %} "selected" {% endif %}>春</option>
+          <option value="3" {% if cours_query == 3 %} "selected" {% endif %}>夏</option>
+          <option value="4" {% if cours_query == 4 %} "selected" {% endif %}>秋</option>
+        </select>
+        <input type="text" name="title" placeholder="作品名" value="{{ title_query }}">
+        <input class="" type="submit" value="検索">
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    {% for work in works %}
+    <div class="col-xs-12 col-md-4">
+      <div class="thumbnail">
+        <a href="{{ url_for('work.show_work', id=work.id) }}">
+          <div class="media">
+            <div class="media-left">
+              <img src="{{ work.image_path }}" width="64" height="64" alt="">
+            </div>
+            <div class="media-body">
+              <h4 class="media-heading">
+                {{ work.title }}
+              </h4>
+            </div>
+          </div>
+        </a>
+        <div class="caption">
+          <form method="post">
+            <div class="btn-group btn-group-justified" role="group">
+              <div class="btn-group" role="group">
+                <button class="btn btn-success" formaction="">
+                  <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="btn-group" role="group">
+                <button class="btn btn-success" formaction="" >
+                  <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
+                </button>
+              </div>
+              <div class="btn-group" role="group">
+                <button class="btn btn-success " formaction="">
+                  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    {% else %}
+      <h3>該当作品なし</h3>  
+    {% endfor %}
+  </div>
+</div>
 {% endblock %}
