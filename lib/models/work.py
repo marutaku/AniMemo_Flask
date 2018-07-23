@@ -37,7 +37,7 @@ class WorkModel():
         return True
 
     def get_works(self, title, year, cours):
-        if title is None and year is None and cours is None:
+        if (title is None and year is None and cours is None) or (title == "" and year == "" and cours == ""):
             return self.work_db.get_works()
         if title != "" and year != "" and cours != "":
             return self.work_db.get_works_by_title_and_year_and_cours(title, year, cours)
