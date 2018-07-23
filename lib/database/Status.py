@@ -12,5 +12,5 @@ class Status(AbstractDB):
         return self._request(sql)
 
     def get_all_status(self, user_id):
-        sql = 'SELECT * FROM states WHERE user_id = {user_id}'.format(user_id=user_id)
+        sql = 'SELECT * FROM states INNER JOIN works ON works.id = states.work_id WHERE user_id = {user_id}'.format(user_id=user_id)
         return self._request(sql)

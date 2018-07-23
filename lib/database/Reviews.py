@@ -10,7 +10,8 @@ class Review(AbstractDB):
         return self._request(sql)
 
     def get_review_by_user_id(self, user_id):
-        sql = 'SELECT * FROM reviews WHERE user_id={user_id} ORDER BY id DESC'.format(user_id=user_id)
+        sql = 'SELECT * FROM reviews INNER JOIN works on works.id = reviews.work_id WHERE user_id={user_id} ORDER BY reviews.id DESC'.format(
+            user_id=user_id)
         return self._request(sql)
 
     def insert_review(self, user_id, work_id, text):
