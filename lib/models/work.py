@@ -11,6 +11,18 @@ class WorkModel():
     work_db = Works()
     review_db = Review()
     shangrila_api = ShangriLa()
+    
+    def is_stored(self, year):
+        print('he')
+        if self.work_db.count_works_by_year(year)[0]['count(*)'] == "0":
+        # if self.work_db.count_works_by_year(year)[0]['count(*)'] == 0:
+            self.store_works(year)
+        else:
+            print('hello')
+            print(self.work_db.count_works_by_year(year)[0])
+            print(self.work_db.count_works_by_year(year)[0]['count(*)'])
+            print('hello')
+
 
     def store_works(self, year):
         for cours in [1, 2, 3, 4]:
@@ -31,7 +43,7 @@ class WorkModel():
                 else:
                     image_path = None
                 self.work_db.insert_work(work['title'], image_path, work['title_short1'], work['title_short2'],
-                                         work['title_short3'], year, work['cours_id'], work['public_url'],
+                                         work['title_short3'], year, cours, work['public_url'],
                                          work['twitter_account'], work['twitter_hash_tag'])
                 sleep(1)
         return True

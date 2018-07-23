@@ -4,7 +4,7 @@
   <div class="tac">
     <div class="input-group my_box">
       <form action="{{ url_for('work.render_works') }}">
-        <input type="number" name="year" min="2014" max="2018" value="{{ year_query }}">
+          <input type="number" name="year" min="2014" max="{{ current_year }}" value="{{ year_query }}">
         <select name="cours">
           <option value="" {% if cours_query == "" %} "selected" {% endif %}>-</option>
           <option value="1" {% if cours_query == 1 %} "selected" {% endif %}>冬</option>
