@@ -82,8 +82,9 @@
                 </div>
             </div>
         </form>
-        </div>
+      </div>
     </div>
+    <br>
     <div style="">
         {% for review in reviews %}
         <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
