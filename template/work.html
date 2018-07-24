@@ -83,13 +83,15 @@
             </div>
         </div>
     </div>
-    <div style="">
-        {% for review in reviews %}
-        <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
-            {{ review.text }}
-        </a>
-        {% endfor %}
-    </div>
+</div>
+<br>
+<div style="">
+    {% for review in reviews %}
+    <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
+        {{ review.text }}
+    </a>
+    {% endfor %}
+</div>
 </div>
 <script>
     $('.favorite').on('click', (e) => {
