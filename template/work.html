@@ -4,7 +4,7 @@
     <div class="flexbox">
         <h1>
             <img class="img" src="{{ work[0].image_path }}" width="64" height="64"><span
-                style="vertical-align: middle;">{{ work[0].title }}</span>
+                                                                       style="vertical-align: middle;">{{ work[0].title }}</span>
         </h1>
     </div>
     <table class="table">
@@ -58,8 +58,8 @@
                     <span class="input-group-addon">レビュー</span>
                     <input type="text" name="text" class="form-control" required>
                     <span class="input-group-btn">
-                    <button class="btn btn-default">送信</button>
-                </span>
+                        <button class="btn btn-default">送信</button>
+                    </span>
                 </div>
             </form>
         </div>
@@ -83,15 +83,13 @@
             </div>
         </div>
     </div>
-</div>
 <br>
-<div style="">
+{# <div style="container"> #}
     {% for review in reviews %}
     <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
         {{ review.text }}
     </a>
     {% endfor %}
-</div>
 </div>
 <script>
     $('.favorite').on('click', (e) => {
@@ -108,33 +106,33 @@
             e => alert(e)
         );
     });
-    $('.watched').on('click', (e) => {
-        e.preventDefault();
-        const workId = $(e.currentTarget).data('work-id');
-        $.ajax({
-            url: `/status/watched/${workId}`,
-            method: 'POST',
-            data: {
-                status: 1
-            }
-        }).then(
-            result => alert(result.result),
-            e => alert(e)
-        );
-    });
-    $('.watch-later').on('click', (e) => {
-        e.preventDefault();
-        const workId = $(e.currentTarget).data('work-id');
-        $.ajax({
-            url: `/status/watch_later/${workId}`,
-            method: 'POST',
-            data: {
-                status: 0
-            }
-        }).then(
-            result => alert(result.result),
-            e => alert(e)
-        )
-    })
+$('.watched').on('click', (e) => {
+    e.preventDefault();
+    const workId = $(e.currentTarget).data('work-id');
+    $.ajax({
+        url: `/status/watched/${workId}`,
+        method: 'POST',
+        data: {
+            status: 1
+        }
+    }).then(
+        result => alert(result.result),
+        e => alert(e)
+    );
+});
+$('.watch-later').on('click', (e) => {
+    e.preventDefault();
+    const workId = $(e.currentTarget).data('work-id');
+    $.ajax({
+        url: `/status/watch_later/${workId}`,
+        method: 'POST',
+        data: {
+            status: 0
+        }
+    }).then(
+        result => alert(result.result),
+        e => alert(e)
+    )
+})
 </script>
 {% endblock %}
