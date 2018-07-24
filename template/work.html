@@ -3,7 +3,8 @@
 <div class="container">
     <div class="flexbox">
         <h1>
-            <img class="img" src="{{ work[0].image_path }}" width="64" height="64"><span style="vertical-align: middle;">{{ work[0].title }}</span>
+            <img class="img" src="{{ work[0].image_path }}" width="64" height="64"><span
+                style="vertical-align: middle;">{{ work[0].title }}</span>
         </h1>
     </div>
     <table class="table">
@@ -51,46 +52,89 @@
         </tr>
     </table>
     <div class="row">
-      <div class="col-xs-12 col-md-8">
-        <form action="{{ url_for('work.post_review', id=work[0].id) }}" method="post">
-            <div class="input-group">
-                <span class="input-group-addon">レビュー</span>
-                <input type="text" name="text" class="form-control" required>
-                <span class="input-group-btn">
+        <div class="col-xs-12 col-md-8">
+            <form action="{{ url_for('work.post_review', id=work[0].id) }}" method="post">
+                <div class="input-group">
+                    <span class="input-group-addon">レビュー</span>
+                    <input type="text" name="text" class="form-control" required>
+                    <span class="input-group-btn">
                     <button class="btn btn-default">送信</button>
                 </span>
-            </div>
-        </form>
-      </div>
-      <div class="col-xs-12 col-md-4">
-        <form method="post">
+                </div>
+            </form>
+        </div>
+        <div class="col-xs-12 col-md-4">
             <div class="btn-group btn-group-justified" role="group">
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success " >
+                    <button class="watch-later btn btn-success" data-work-id="{{work[0].id}}">
                         <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success " >
+                    <button class="watched btn btn-success " data-work-id="{{work[0].id}}">
                         <span class="glyphicon glyphicon-folder-open" aria-hidden="true"></span>
                     </button>
                 </div>
                 <div class="btn-group" role="group">
-                    <button class="btn btn-success " >
+                    <button class="favorite btn btn-success " data-work-id="{{work[0].id}}">
                         <span class="glyphicon glyphicon-heart" aria-hidden="true"></span>
                     </button>
                 </div>
             </div>
-        </form>
-      </div>
-    </div>
-    <br>
-    <div style="">
-        {% for review in reviews %}
-        <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
-            {{ review.text }}
-        </a>
-        {% endfor %}
+        </div>
     </div>
 </div>
+<br>
+<div style="">
+    {% for review in reviews %}
+    <a href="{{ url_for('user.detail', id=review.user_id) }}" class="review">
+        {{ review.text }}
+    </a>
+    {% endfor %}
+</div>
+</div>
+<script>
+    $('.favorite').on('click', (e) => {
+        e.preventDefault();
+        const workId = $(e.currentTarget).data('work-id');
+        $.ajax({
+            url: `/status/favorite/${workId}`,
+            method: 'POST',
+            data: {
+                status: 2
+            }
+        }).then(
+            result => alert(result.result),
+            e => alert(e)
+        );
+    });
+    $('.watched').on('click', (e) => {
+        e.preventDefault();
+        const workId = $(e.currentTarget).data('work-id');
+        $.ajax({
+            url: `/status/watched/${workId}`,
+            method: 'POST',
+            data: {
+                status: 1
+            }
+        }).then(
+            result => alert(result.result),
+            e => alert(e)
+        );
+    });
+    $('.watch-later').on('click', (e) => {
+        e.preventDefault();
+        const workId = $(e.currentTarget).data('work-id');
+        $.ajax({
+            url: `/status/watch_later/${workId}`,
+            method: 'POST',
+            data: {
+                status: 0
+            }
+        }).then(
+            result => alert(result.result),
+            e => alert(e)
+        )
+    })
+</script>
 {% endblock %}
